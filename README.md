@@ -1,42 +1,65 @@
 # RxNow — Medical Orders App Prototype
 
-## Stripe Backend Setup
+**Developed by prcims.**
 
+## Overview
 
+RxNow is a medical prescription and order entry prototype that's mobile-first, built in React + Vite, styled with Tailwind CSS.  
+It supports searching medications (expandable DB/API), prescription entry, pricing rules, order export, and a Stripe-ready payment flow (placeholder).
+
+### Features
+
+- Mobile-friendly UI, React + Tailwind
+- Search & select from medications (expandable DB, RxNorm API ready)
+- Dose, indication, quantity, refills per drug
+- Free-text labs/orders, ICD-10 DX field
+- Pricing: $30/1-4 items, $45/5-10 items, $55/11+, $75 instant
+- Order/Cart preview, JSON export
+- Stripe payment flow placeholder
+- Easily expandable to thousands of meds with `src/medications.full.csv`
+- RxNorm API integration ready (see `src/medications.js`)
+
+## Quick Start
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/prcims/RxNow.git
+   cd RxNow
+   ```
 2. Install dependencies:
-    ```bash
-    npm install express cors stripe dotenv
-    ```
+   ```bash
+   npm install
+   ```
+3. Start development:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:5173](http://localhost:5173) in browser.
 
-3. Start the backend server:
-    ```bash
-    node server.js
-    ```
-    or
-    ```bash
-    npm run start:server
-    ```
+## Expanding Medication Database
 
-4. **How it works:**  
-   - The frontend React app posts order details to `/api/create-stripe-session`.
-   - The backend creates a Stripe Checkout session (using the server secret key).
-   - The response contains `url` for Stripe Checkout; frontend redirects to Stripe for payment.
+- To load a huge list, add to `src/medications.full.csv`.  
+- Use `medications.js` to switch to API mode (RxNorm or other).
 
-5. Change `success_url` and `cancel_url` to point to your production app domain when deploying!
+## Stripe Payment Integration
 
----
+- Replace the `handleCheckout` function in `src/App.jsx` with live Stripe session creation:
+  See [Stripe Docs: Checkout](https://stripe.com/docs/checkout) for server endpoints and client redirection.
+- Example:
+  ```
+  // Server: create Stripe Checkout session and return URL
+  // Client: window.location = session.url
+  ```
 
-**Codespaces Usage:**  
-- Open two terminals:  
-  - One for `npm run dev` (React frontend)  
-  - One for `node server.js` (Stripe backend)
+## Security & Production
 
----
+- This prototype does NOT include auth, HIPAA compliance, audit logging, or backend order storage.
+- Secure diagnosis/order data with encryption before launch!
 
-## Security
+## License
 
-- **Do not commit .env with real Stripe secrets.**
-- Only publishable key (`pk_live_...`) goes in frontend.
-- Protect your backend server routes and enable auth/session tracking for real deployments.
+MIT
 
----
+## Author
+
+prcims

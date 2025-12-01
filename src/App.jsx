@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { searchMedicationsRxNorm } from "./medications";
 
-// Stripe public key
-const STRIPE_PK = "pk_test_MY_TEST_PUBLISHABLE_KEY"; // <--- Replace with your Stripe publishable key
+// STRIPE PUBLIC KEY (LIVE)
+const STRIPE_PK = "pk_live_51SZO7tRqn6TBiexnx3MY4RpcqjXakqrzS0ND1MJ7fZjrURISE0j8ffkxjKdVpXKmjWMx5fgR9DGmrOc2xEdOIG3G00rCcgV3md";
 
 export default function RxOrdersApp() {
   const [query, setQuery] = useState("");
@@ -119,7 +119,7 @@ export default function RxOrdersApp() {
         <header className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl md:text-3xl font-semibold">RxNow — Medical Orders Prototype</h1>
-            <p className="text-sm text-gray-500 mt-1">RxNorm-powered search. Stripe Checkout integrated.</p>
+            <p className="text-sm text-gray-500 mt-1">RxNorm-powered search. Stripe Checkout integrated <span className="font-bold text-blue-600 visible">LIVE KEY</span>.</p>
           </div>
           <div className="text-right">
             <div className="text-sm text-gray-600">Order items: <span className="font-medium">{cart.length}</span></div>
@@ -209,20 +209,26 @@ export default function RxOrdersApp() {
                   <button onClick={handleCheckout} className="w-full px-4 py-2 rounded-lg bg-emerald-600 text-white">Proceed to payment</button>
                   <button onClick={exportJSON} className="w-full px-4 py-2 rounded-lg border">Export order (JSON)</button>
                 </div>
-                <div className="mt-3 text-xs text-gray-400">Payment now uses Stripe Checkout session via backend endpoint.</div>
+                <div className="mt-3 text-xs text-gray-400">
+                  Payment is processed with Stripe Checkout.<br />
+                  <span className="font-bold text-blue-600">Using LIVE Stripe Key</span>
+                </div>
               </div>
               <div className="p-4 rounded-lg border bg-white">
                 <h4 className="font-semibold">Quick help</h4>
                 <ul className="text-sm text-gray-600 mt-2 space-y-1">
-                  <li>- Medications now loaded via RxNorm API (search by drug name).</li>
-                  <li>- Stripe Checkout now enabled (see server endpoint example below).</li>
+                  <li>- RxNorm medication API (search by drug name).</li>
+                  <li>- <span className="font-bold text-blue-600">Stripe Checkout enabled (LIVE KEY)</span>.</li>
                   <li>- Implement backend auth and secure storage for production/HIPAA use.</li>
                 </ul>
               </div>
             </div>
           </aside>
         </main>
-        <footer className="mt-6 text-center text-sm text-gray-500">Prototype — not for production use. Add auth, secure backend, Stripe secret, HIPAA compliance for clinical use.</footer>
+        <footer className="mt-6 text-center text-sm text-gray-500">
+          Prototype — not for production use. Add auth, secure backend, Stripe secret, HIPAA compliance for clinical use.<br/>
+          <span className="font-bold text-blue-600">Stripe: {STRIPE_PK}</span>
+        </footer>
       </div>
     </div>
   );
